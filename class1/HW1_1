@@ -1,0 +1,38 @@
+#引入 tkinter module
+from tkinter import *
+#引入 Pillow module
+from PIL import Image, ImageTk
+#引入ttk module, 並取名為ttk
+import tkinter.ttk as ttk
+#建立主視窗 Frame
+root = Tk()
+#設定視窗標題
+root.title("20232019")
+#設定視窗大小為 300x100，視窗(左上角)在螢幕上的座標位置為(500，150)
+root.geometry("1000x300+500+150")
+#開啟圖片
+img = Image.open("C:/Users/SP513-52N/Documents/Python_2023Spring/class1/unnamed.png")
+tk_img = ImageTk.PhotoImage(img)
+root.iconphoto(True, tk_img)
+
+def start():
+    mystringvar.set("processing...")
+
+def stop():
+    mystringvar.set("Done")
+
+Start = Button(text="Start", command=start)
+Start.pack()
+
+Stop = Button(text="Stop", command=stop)
+Stop.pack()
+
+mystringvar = StringVar()
+mystringvar.set('Initialization...')
+
+statusBar = Label(root, textvariable= mystringvar,fg="black", bg="white", anchor=W,
+relief="sunken",bd=2)
+
+statusBar.pack(side="bottom",fill="x")
+
+root.mainloop()

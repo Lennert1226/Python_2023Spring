@@ -15,9 +15,6 @@ img = Image.open("C:/Users/SP513-52N/Documents/Python_2023Spring/class1/unnamed.
 tk_img = ImageTk.PhotoImage(img)
 root.iconphoto(True, tk_img)
 
-def Start():
-    pass
-
 # #建立 Label
 # label1=Label(root, text="flat", relief="flat")
 
@@ -34,16 +31,35 @@ def Start():
 # label6=Label(root, text="flat", relief="sunken")
 # label6.pack()
 
-Button1=Button(root, text="Start", fg="black", bg="white")
-Button1.pack()
+# statusBar1 = Label(root, text="processing...", fg="black", bg="white", anchor=W, relief="sunken", bd=2)
+# #加入視窗
+# statusBar1.pack(side="bottom", fill="x")
 
-Button2=Button(root, text="Stop", fg="black", bg="white")
-Button2.pack()
+# mystringvar = StringVar()
+# mybutton = Button(root, textvariable= mystringvar)
+# mybutton.pack()
 
-statusBar1 = Label(root, text="processing...", fg="black", bg="white", anchor=W, relief="sunken", bd=2)
+# statusBar
+# start button function
+def start():
+    mystringvar.set("processing...")
+# stop button function
+def stop():
+    mystringvar.set("Done")
+# start button object
+Start = Button(text="Start", command=start)
+Start.pack()
+# stop button object
+Stop = Button(text="Stop", command=stop)
+Stop.pack()
+# 建立StringVar
+mystringvar = StringVar()
+mystringvar.set('Initialization...')
+# 建立 Label
+statusBar = Label(root, textvariable= mystringvar,fg="black", bg="white", anchor=W,
+relief="sunken",bd=2)
 #加入視窗
-statusBar1.pack(side="bottom", fill="x")
-
+statusBar.pack(side="bottom",fill="x")
 # table = ttk.Treeview(root, columns=["Product Name", "Unit Price", "Quantity", "Subtotal"])
 # #Create columns title
 # table.heading("#0", text="Pruduct Name")
