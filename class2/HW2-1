@@ -1,65 +1,77 @@
+# 引入 tkinter module
 from tkinter import *
-from PIL import Image, ImageTk
-import tkinter.ttk as ttk
+# 引入 tkscrolledframe module
 from tkscrolledframe import ScrolledFrame
 
+# 建立主視窗 Frame
 root = Tk()
+# 設定視窗標題
 root.title("午餐系統")
+# 設定視窗大小為 300x100,視窗(左上角)在螢幕上的座標位置為(500,150)
 root.geometry("300x100+500+150")
 
+# Create a ScrolledFrame widget
 sframe1 = ScrolledFrame(root, width=300, height=300, bg="pink")
 sframe1.pack()
 
+# Bind the arrow keys and scroll wheel
 sframe1.bind_arrow_keys(root)
 sframe1.bind_scroll_wheel(root)
 
+# Create a frame within the ScrolledFrame
 inner_frame = sframe1.display_widget(Frame)
-checkbtnVal = StringVar()
 
+# 宣告show function 改變Status Bar 內容
 def show():
     text = (checkbtnVal1.get())+" "+(checkbtnVal2.get())+" "+(checkbtnVal3.get())
-    text = text+" "+(checkbtnVal4)
-    statusBar2["text"]=text
+    text = text+" "+(checkbtnVal4.get())+" "+(checkbtnVal5.get())+" "+(checkbtnVal6.get())
+    statusBar1["text"]=text
 
+# 宣告3個用於Radio Btn的文字變數
 checkbtnVal1 = StringVar()
 checkbtnVal2 = StringVar()
 checkbtnVal3 = StringVar()
 
-title2label = Label(root, text='選擇食物種類:')
-title2label.grid(row=0,column=0, sticky=W)
+# 建立標題Label
+title1label = Label(inner_frame, text='選擇食物種類:')
+title1label.grid(row=0,column=0, columnspan=2, sticky=W)
 
-checkbtn1 = Checkbutton(root, text='和牛',variable=checkbtnVal1, onvalue="和牛", offvalue="", fg='Pink', command=show)
+# 放入第一個單選按鈕
+checkbtn1 = Checkbutton(inner_frame, text='和牛',variable=checkbtnVal1, onvalue="和牛", offvalue="", fg='Pink', command=show)
 checkbtn1.grid(row=1,column=0, sticky=W)
 
-checkbtn2 = Checkbutton(root, text='伊比利豬',variable=checkbtnVal2, onvalue="伊比利豬", offvalue="", fg='Pink', command=show)
+# 放入第二個單選按鈕
+checkbtn2 = Checkbutton(inner_frame, text='伊比利豬',variable=checkbtnVal2, onvalue="伊比利豬", offvalue="", fg='Pink', command=show)
 checkbtn2.grid(row=1,column=1, sticky=W)
 
-checkbtn3 = Checkbutton(root, text='海鮮',variable=checkbtnVal3, onvalue="海鮮", offvalue="", fg='Pink', command=show)
+# 放入第三個單選按鈕
+checkbtn3 = Checkbutton(inner_frame, text='海鮮',variable=checkbtnVal3, onvalue="海鮮", offvalue="", fg='Pink', command=show)
 checkbtn3.grid(row=1,column=2, sticky=W)
 
-statusBar2 = Label(root, text="", fg="black", bg="white", anchor=W, relief="sunken",bd=2)
+# 建立標題Label
+title2label = Label(inner_frame, text='選擇飲料種類:')
+title2label.grid(row=2,column=0, columnspan=2, sticky=W)
 
-statusBar2.grid(row=10,column=0, columnspan=3, sticky=W+E+S)
-
-
-def show():
-    text = (checkbtnVal4.get())+" "+(checkbtnVal5.get())+" "+(checkbtnVal6.get())
-    statusBar2["text"]=text
-
+# 宣告3個用於Radio Btn的文字變數
 checkbtnVal4 = StringVar()
 checkbtnVal5 = StringVar()
 checkbtnVal6 = StringVar()
 
-title3label = Label(root, text='選擇飲料種類:')
-title3label.grid(row=2,column=0, sticky=W)
+# 放入第一個單選按鈕
+checkbtn1 = Checkbutton(inner_frame, text='莊園咖啡',variable=checkbtnVal4, onvalue="莊園咖啡", offvalue="", fg='Pink', command=show)
+checkbtn1.grid(row=3,column=0, sticky=W)
 
-checkbtn4 = Checkbutton(root, text='莊園咖啡',variable=checkbtnVal4, onvalue="莊園咖啡", offvalue="", fg='Pink', command=show)
-checkbtn4.grid(row=3,column=0, sticky=W)
+# 放入第二個單選按鈕
+checkbtn2 = Checkbutton(inner_frame, text='日月潭蜜香紅茶',variable=checkbtnVal5, onvalue="日月潭蜜香紅茶", offvalue="", fg='Pink', command=show)
+checkbtn2.grid(row=3,column=1, sticky=W)
 
-checkbtn5 = Checkbutton(root, text='日月潭蜜香紅茶',variable=checkbtnVal5, onvalue="日月潭蜜香紅茶", offvalue="", fg='Pink', command=show)
-checkbtn5.grid(row=3,column=1, sticky=W)
+# 放入第三個單選按鈕
+checkbtn3 = Checkbutton(inner_frame, text='伯爵奶茶',variable=checkbtnVal6, onvalue="伯爵奶茶", offvalue="", fg='Pink', command=show)
+checkbtn3.grid(row=3,column=2, sticky=W)
 
-checkbtn6 = Checkbutton(root, text='伯爵奶茶',variable=checkbtnVal6, onvalue="伯爵奶茶", offvalue="", fg='Pink', command=show)
-checkbtn6.grid(row=3,column=2, sticky=W)
+# 建立 Label
+statusBar1 = Label(inner_frame, text="", fg="black", bg="white", anchor=W, relief="sunken",bd=2)
+# 加入視窗
+statusBar1.grid(row=10,column=0, columnspan=3, sticky=W+E+S)
 
 root.mainloop()
