@@ -5,6 +5,7 @@ from email.mime.image import MIMEImage
 from pathlib import Path
 # 引入MIMEMultipart物件
 from email.mime.multipart import MIMEMultipart
+
 # Python專案中的墊子郵件內容完成後，接下來就要設定Gmail的SMTP伺服器來傳送
 # 引入smtplib物件
 import smtplib
@@ -13,10 +14,10 @@ import smtplib
 smtp = smtplib.SMTP(host = "smtp.gmail.com", port="587")
 
 # 建立MIMEText物件
-text = MIMEText("Demo-我是一封由python程式碼建立的信封信件!")
+text = MIMEText("Demo-嗨我是嚴某，我愛吃屎!哈哈哈哈哈哈哈!!!!XD")
 
 # 用read_bytes是為了以bytes的形式讀取圖片內容
-image = MIMEImage(Path("C:/Users/SP513-52N/Documents/Python_2023Spring/class1/unnamed.png").read_bytes())
+image = MIMEImage(Path("C:/Users/SP513-52N/Documents/Python_2023Spring/class5/7 嚴征皓.jpg").read_bytes())
 
 # 建立MIMEMuiltiple物件
 content = MIMEMultipart()
@@ -25,8 +26,7 @@ content["subject"] = "2023 Python APP 創新城市春季班 (Demo)"
 # 寄件者
 content["from"] = "lennertyen1226@gmail.com"
 # 收件者
-content["to"] = "Vicky7011@yahoo.com.tw"
-
+content["to"] = "kubetech.academy0524@gmail.com"
 # 郵件內容使用MIMEMultipart物件的attach方法(Method)進行設定
 # 郵件內容
 content.attach(text)
