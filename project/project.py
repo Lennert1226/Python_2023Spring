@@ -11,8 +11,10 @@ import smtplib
 import tkinter.ttk as ttk
 root = Tk()
 root.title("Shoes Gathering")
-
+#儲存使用者的email及password(最後要寄帳單給使用者)
 userInfo = [["email"],["password"]]
+
+cost = [["money"]]
 
 root.geometry("880x650")
 def showdetail():
@@ -54,10 +56,13 @@ def createNewWindow():
     #建立新label在New Windows 裡
     # click the button to add 1 to the number
     def add(numlabel, pricelabel):
+        global cost
+        cost[0] = str(money.get())
     # numlabel的text+1
         numlabel["text"] = int(numlabel["text"])+1
         price = int(pricelabel["text"].split(".")[1].replace(",","").strip())
         total = int(totalval.get().split(":")[1].replace("元","").strip())
+        money = total+price
         totalval.set("共消費: "+str(total+price)+" 元")
         # click the button to minus 1 to the number
         
@@ -80,7 +85,7 @@ def createNewWindow():
     titleimg = ImageTk.PhotoImage(titleimg)
     titlelabel = Label(newWindow, image=titleimg, width=32, height=32)
     titlelabel.grid(row=0, column=0, sticky=W)
-    sofabtn1 = Button(newWindow, text="籃球", font=("Inter", 12), fg="#1E1E1E", bg="#ECE8E7", width=5, pady=2)
+    sofabtn1 = Button(newWindow, text="籃球", font=("Inter", 12), fg="#1E1E1E", bg="#ECE8E7", width=5, pady=2,command=soccor)
     sofabtn1.grid(row=0, column=1, sticky=E+W)
     bedding= Button(newWindow, text="足球", font=("Inter", 12), fg="#1E1E1E", bg="#ECE8E7", width=5, pady=2)
     bedding.grid(row=0, column=2, sticky=E+W)
@@ -89,8 +94,34 @@ def createNewWindow():
     loginbutton = Button(newWindow, text="會員登入/註冊", font=("Inter", 12), fg="#1E1E1E", bg="#ECE8E7", width=12, pady=2,command=login)
     loginbutton.grid(row=0, column=7, sticky=E+W, padx=5)
     
+    def soccor():
+        soccor = Toplevel(root)
+        soccor.title("足球鞋(Soccor)")
+        soccor.geometry("880x650")
+
+
+    #點擊登入/註冊button的時候跳出新視窗(輸入gmail)
     def login():
+        #把gmail and password存在userInfo
+        global userInfo
+        def signUp():
+            global userInfo
+            userInfo[0]=str(gmail.get())
+            userInfo[1]=str(password2.get())
+            Login.destroy()
         Login = Toplevel(root)
+        Login.title("註冊")
+        Login.geometry("550x200")
+        ask = Label(Login, text="Please enter your Gmail.")
+        ask.pack()
+        gmail = Entry(Login, width=30, font=("Georgia",16))
+        gmail.pack()
+        ask2 = Label(Login, text="Please enter your password.")
+        ask2.pack()
+        password2 = Entry(Login, width=30, font=("Georgia",16))
+        password2.pack()
+        enter = Button(Login, text="Enter", command=signUp)
+        enter.pack()
         Login.mainloop()
 
     # row=1
@@ -283,7 +314,7 @@ titleimg = Image.open("project/img/d63d5f27d6e46a6918a26f36a5f31c0f.jpg")
 titleimg = titleimg.resize((32,32))
 titleimg = ImageTk.PhotoImage(titleimg)
 titlelabel = Label(root, image=titleimg, width=32, height=32)
-titlelabel.grid(row=0, column=0, sticky=W) 
+titlelabel.grid(row=0, column=0, sticky=W)
 sofabtn1 = Button(root, text="籃球", font=("Inter", 12), fg="#1E1E1E", bg="#ECE8E7", width=5, pady=2)
 sofabtn1.grid(row=0, column=1, sticky=E+W)
 bedding= Button(root, text="足球", font=("Inter", 12), fg="#1E1E1E", bg="#ECE8E7", width=5, pady=2, command=lambda: createNewWindow())
@@ -292,8 +323,6 @@ kitchen = Button(root, text="跑步", font=("Inter", 12), fg="#1E1E1E", bg="#ECE
 kitchen.grid(row=0, column=3, sticky=E+W)
 loginbutton = Button(root, text="會員登入/註冊", font=("Inter", 12), fg="#1E1E1E", bg="#ECE8E7", width=12, pady=2,command=login)
 loginbutton.grid(row=0, column=7, sticky=E+W, padx=5)
-
-
 
 # row=1
 bannerimg = Image.open("project/img/image.webp")
@@ -394,9 +423,11 @@ root.rowconfigure(5,weight=2)
 checkoutbutton = Button(root, text="結帳", font=("Inter", 10), fg="#1E1E1E", bg="#ECEDE7")
 checkoutbutton.grid(row=5, column=7, sticky=E+S, padx=5, pady=1)
 
+
+
 smtp = smtplib.SMTP(host = "smtp.gmail.com", port="587")
 
-text = MIMEText("您好，您剛剛已在Nike Shop 消費了"+str(totalval)+"元。")
+text = MIMEText("您好，您剛剛已在Nike Shop 消費了"+str(cost[0])+"元。")
 
 content = MIMEMultipart()
 
@@ -404,7 +435,7 @@ content["subject"] = "2023 Python APP 創新城市春季班 (Demo)"
 # 寄件者
 content["from"] = "jopu7011@gmail.com"
 # 收件者
-content["to"] = ""
+content["to"] = str(userInfo[0])
 
 content.attach(text)
 
