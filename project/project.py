@@ -19,23 +19,23 @@ cost=0
 
 def ads(adtype):
     if adtype == "soccor":
-        bannerimg = Image.open("project/img/bed5.jpg")
+        bannerimg = Image.open("C:/Users/SP513-52N/Documents/Python_2023Spring/project/img/016dfdc7a59be1e8c41d14c9758f9de9.jpg")
         bannerimg = bannerimg.resize((852,298))
         global tk_img
         tk_img = ImageTk.PhotoImage(bannerimg)
         bannerlabel["image"] = tk_img
     elif adtype == "basketball":
-        bannerimg = Image.open("project/img/bed5.jpg")
+        bannerimg = Image.open("C:/Users/SP513-52N/Documents/Python_2023Spring/project/img/16871f22b30d540bec0273181d6160f4.jpg")
         bannerimg = bannerimg.resize((852,298))
-        global tk_img
-        tk_img = ImageTk.PhotoImage(bannerimg)
-        bannerlabel["image"] = tk_img
+        global tk_img2
+        tk_img2 = ImageTk.PhotoImage(bannerimg)
+        bannerlabel["image"] = tk_img2
     elif adtype == "running":
-        bannerimg = Image.open("project/img/bed5.jpg")
+        bannerimg = Image.open("C:/Users/SP513-52N/Documents/Python_2023Spring/project/img/maxresdefault.jpg")
         bannerimg = bannerimg.resize((852,298))
-        global tk_img
-        tk_img = ImageTk.PhotoImage(bannerimg)
-        bannerlabel["image"] = tk_img
+        global tk_img3
+        tk_img3 = ImageTk.PhotoImage(bannerimg)
+        bannerlabel["image"] = tk_img3
 def checkout():
     def sendemail(decision):
         subtotal1 = int(productnumber1["text"])*int(productprice1["text"].split(".")[1].replace(",","").strip())
@@ -43,9 +43,8 @@ def checkout():
         subtotal3 = int(productnumber3["text"])*int(productprice3["text"].split(".")[1].replace(",","").strip())
         subtotal4 = int(productnumber4["text"])*int(productprice4["text"].split(".")[1].replace(",","").strip())
         total = subtotal1+subtotal2+subtotal3+subtotal4
-        
         if decision:
-            content = "已加購!"+"您好，您剛剛已在Nike Shop 消費了"+str(total)+"元。"
+            content = "已加購Air Jordan XXXVII 低筒 PF!"+"您好，您剛剛已在Nike Shop 消費了"+str(total+5040)+"元。"
         else:
             content = "您好，您剛剛已在Nike Shop 消費了"+str(total)+"元。"
         smtp = smtplib.SMTP(host = "smtp.gmail.com", port="587")
@@ -70,13 +69,34 @@ def checkout():
                 smtp.quit()
             except Exception as e:
                 print("Error message: ", e)
+
     checkoutwindow = Toplevel(root)
-    checkoutwindow.geometry("850x250")
-    
+    checkoutwindow.geometry("500x450")
+    shoeimg = Image.open("./project/img/28f581f1-975a-4df9-88b2-2ea2fb6d75f1.webp")
+    shoeimg = shoeimg.resize((202,200))
+    global tk_img4
+    tk_img4 = ImageTk.PhotoImage(shoeimg)
+    shoe2label = Label(checkoutwindow, image=tk_img4, width=202, height=200)
+    shoe2label.grid(row=3, column=0, sticky=W, padx=5, columnspan=2)
+    label = Label(checkoutwindow, text="購買此商品可打8折!", font=(50), fg="#FF0000")
+    label.grid(row=3, column=2)
+    productname2 = Label(checkoutwindow, text="Air Jordan XXXVII 低筒 PF(原價NT.6300)", font=("Inter", 11), fg="#000000")
+    productname2.grid(row=4, column=0, sticky=W, padx=5, columnspan=2)
+    productprice2 = Label(checkoutwindow, text="NT.5040", font=("Inter", 10), fg="#000000")
+    productprice2.grid(row=5, column=0, sticky=W, padx=5)
+    # minusbutton2 = Button(checkoutwindow, text="-", font=("Inter", 10), fg="#1E1E1E", bg="#E7E2E2",command=lambda: minus(productnumber1,productprice1))
+    # minusbutton2.grid(row=5, column=0, sticky=E)
+    # productnumber2 = Label(checkoutwindow, text="0", font=("Inter", 12, "bold"), fg="#000000")
+    # productnumber2.grid(row=5, column=1)
+    # addbutton2 = Button(checkoutwindow, text="+", font=("Inter", 10), fg="#1E1E1E", bg="#E7E2E2",command=lambda: add(productnumber1, productprice1))
+    # addbutton2.grid(row=5, column=2, sticky=W)
+    asklabel = Label(checkoutwindow, text="您要加購嗎?要的話請按Yes，不要的話請按No~")
+    asklabel.grid(row=0, column=0, columnspan=3)
     yesbutton = Button(checkoutwindow, text="Yes", command=lambda:sendemail(TRUE))
-    yesbutton.pack()
+    yesbutton.grid(row=1, column=0)
     nobutton = Button(checkoutwindow, text="No", command=lambda:sendemail(FALSE))
-    nobutton.pack()
+    nobutton.grid(row=1, column=1)
+    checkoutwindow.mainloop()
 
 def showdetail():
     detailWindow = Toplevel(root)
@@ -106,10 +126,11 @@ def showdetail():
     
     total = subtotal1+subtotal2+subtotal3+subtotal4
     global cost
-    total=cost
+
     table.insert('',index='end',text='Total',values=['','', total], tag=('totalcolor'))
 
     table.pack()
+
     detailWindow.mainloop()
 
 
@@ -204,13 +225,13 @@ titleimg = titleimg.resize((32,32))
 titleimg = ImageTk.PhotoImage(titleimg)
 titlelabel = Label(root, image=titleimg, width=32, height=32)
 titlelabel.grid(row=0, column=0, sticky=W)
-sofabtn1 = Button(root, text="籃球", font=("Inter", 12), fg="#1E1E1E", bg="#ECE8E7", width=5, pady=2, command=lambda:ads("basketball"))
-sofabtn1.grid(row=0, column=1, sticky=E+W)
-bedding= Button(root, text="足球", font=("Inter", 12), fg="#1E1E1E", bg="#ECE8E7", width=5, pady=2, command=lambda:ads("soccor"))
-bedding.grid(row=0, column=2, sticky=E+W)
-kitchen = Button(root, text="跑步", font=("Inter", 12), fg="#1E1E1E", bg="#ECE8E7", width=5, pady=2, command=lambda:ads("running"))
-kitchen.grid(row=0, column=3, sticky=E+W)
-loginbutton = Button(root, text="會員登入/註冊2", font=("Inter", 12), fg="#1E1E1E", bg="#ECE8E7", width=12, pady=2,command=login)
+basketball1 = Button(root, text="籃球", font=("Inter", 12), fg="#1E1E1E", bg="#ECE8E7", width=5, pady=2, command=lambda:ads("basketball"))
+basketball1.grid(row=0, column=1, sticky=E+W)
+soccor1= Button(root, text="足球", font=("Inter", 12), fg="#1E1E1E", bg="#ECE8E7", width=5, pady=2, command=lambda:ads("soccor"))
+soccor1.grid(row=0, column=2, sticky=E+W)
+run = Button(root, text="跑步", font=("Inter", 12), fg="#1E1E1E", bg="#ECE8E7", width=5, pady=2, command=lambda:ads("running"))
+run.grid(row=0, column=3, sticky=E+W)
+loginbutton = Button(root, text="會員登入/註冊", font=("Inter", 12), fg="#1E1E1E", bg="#ECE8E7", width=12, pady=2,command=login)
 loginbutton.grid(row=0, column=7, sticky=E+W, padx=5)
 
 # row=1
